@@ -1,26 +1,31 @@
+# CASOLUS lexical analizer and parser
 import sys, math
 sys.path.insert(0, "../..")
 
 if sys.version_info[0] >= 3:
     raw_input = input
 
+# Tokens names
 tokens = (
     'VAR', 'FLOAT', 'INT',
 )
 
+# some arithmetic symbols
 literals = ['=', '+', '-', '*', '/', '(', ')', '^']
 
-# Tokens
-
+# set Variables format
 t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
-
+# Set floating point structure
+#   number '.' number                   -> example. 12.34
+#   number '.' number 'e' '+/-' number  -> example. 12.34e+56 or 12.34E-56
+#   number 'e' '+/-' number             -> example. 12E+34 or 12e-34
 def t_FLOAT(t):
     r"[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?"
     t.value = float(t.value)
     return t
 
-
+# Set integer structure
 def t_INT(t):
     r'\d+'
     t.value = int(t.value)
@@ -42,8 +47,7 @@ def t_error(t):
 import ply.lex as lex
 lex.lex()
 
-# Parsing rules
-
+# Parsing precedence rules
 precedence = (
     ('left', '^'),
     ('left', '+', '-'),
@@ -51,21 +55,23 @@ precedence = (
     ('right', 'UMINUS'),
 )
 
-# dictionary of names
 names = {}
 
 
+# Define the statement assign
 def p_statement_assign(p):
     'statement : VAR "=" expression'
     names[p[1]] = p[3]
 
 
+# Define statement expression
 def p_statement_expr(p):
     'statement : expression'
     print(p[1])
 
 
-def p_expression_binop(p):
+# Define arithmetic expression
+def p_expression_arith(p):
     '''expression : expression '^' expression
                   | expression '+' expression
                   | expression '-' expression
@@ -88,21 +94,25 @@ def p_expression_uminus(p):
     p[0] = -p[2]
 
 
+# Group several expression by parenthesis
 def p_expression_group(p):
     "expression : '(' expression ')'"
     p[0] = p[2]
 
 
+# Define an expression as a integer
 def p_expression_int(p):
     "expression : INT"
     p[0] = p[1]
 
 
+# Define an expression as a float
 def p_expression_float(p):
     "expression : FLOAT"
     p[0] = p[1]
 
 
+# Define an experssion as a variable
 def p_expression_var(p):
     "expression : VAR"
     try:
