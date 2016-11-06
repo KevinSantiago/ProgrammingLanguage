@@ -21,7 +21,7 @@ t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 #   number '.' number 'e' '+/-' number  -> example. 12.34e+56 or 12.34E-56
 #   number 'e' '+/-' number             -> example. 12E+34 or 12e-34
 def t_FLOAT(t):
-    r"[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?"
+    r"((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?"
     t.value = float(t.value)
     return t
 
