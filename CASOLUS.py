@@ -7,14 +7,21 @@ if sys.version_info[0] >= 3:
 
 # Tokens names
 tokens = (
-    'VAR', 'FLOAT', 'INT',
+    'VAR', 'FLOAT', 'INT', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'POWER', 'LPAREN', 'RPAREN', 'EQUALS',
 )
-
-# some arithmetic symbols
-literals = ['=', '+', '-', '*', '/', '(', ')', '^']
 
 # set Variables format
 t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
+
+# Set tokens representation
+t_PLUS = r'\+'
+t_MINUS = '\-'
+t_TIMES = r'\*'
+t_DIVIDE = r'\/'
+t_POWER = r'\^'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_EQUALS = r'\='
 
 # Set floating point structure
 #   number '.' number                   -> example. 12.34
@@ -49,9 +56,9 @@ lex.lex()
 
 # Parsing precedence rules
 precedence = (
-    ('left', '^'),
-    ('left', '+', '-'),
-    ('left', '*', '/'),
+    ('left', 'POWER'),
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE'),
     ('right', 'UMINUS'),
 )
 
@@ -60,7 +67,7 @@ names = {}
 
 # Define the statement assign
 def p_statement_assign(p):
-    'statement : VAR "=" expression'
+    'statement : VAR EQUALS expression'
     names[p[1]] = p[3]
 
 
@@ -70,33 +77,39 @@ def p_statement_expr(p):
     print(p[1])
 
 
-# Define arithmetic expression
-def p_expression_arith(p):
-    '''expression : expression '^' expression
-                  | expression '+' expression
-                  | expression '-' expression
-                  | expression '*' expression
-                  | expression '/' expression'''
-    if p[2] == '^':
-        p[0] = math.pow(p[1], p[3])
-    elif p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        p[0] = p[1] / p[3]
+def p_expression_plus(p):
+    'expression : expression PLUS expression'
+    p[0] = p[1] + p[3]
+
+
+def p_expression_minus(p):
+    'expression : expression MINUS expression'
+    p[0] = p[1] - p[3]
+
+
+def p_expression_power(p):
+    'expression : expression POWER expression'
+    p[0] = math.pow(p[1], p[3])
+
+
+def p_expression_times(p):
+    'expression : expression TIMES expression'
+    p[0] = p[1] * p[3]
+
+
+def p_expression_divide(p):
+    'expression : expression DIVIDE expression'
+    p[0] = p[1] / p[3]
 
 
 def p_expression_uminus(p):
-    "expression : '-' expression %prec UMINUS"
+    "expression : MINUS expression %prec UMINUS"
     p[0] = -p[2]
 
 
 # Group several expression by parenthesis
 def p_expression_group(p):
-    "expression : '(' expression ')'"
+    "expression : LPAREN expression RPAREN"
     p[0] = p[2]
 
 
