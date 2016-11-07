@@ -1,6 +1,6 @@
 from sympy import *
 # ALL VARIABLES USED IN EQUATIONS MUST BE DECLARED AS SYMBOLS OR ELSE SYMPY METHODS WILL NOT RECOGNIZE THEM
-x, y, z, t, a = symbols('x y z t a')
+x, y, z, t, = symbols('x y z t')
 
 
 # method to derive equation based on variables present
@@ -55,27 +55,72 @@ def newintegration(eq, *args):
 
 
 # method to change equation format; Not working for some reason
-def formatEQ(eq):
+def formateq(eq):
     if isinstance(eq, str):
         tired = str(eq)
         tired.replace("^", "**")
         return tired
 
+
+def summation(eq, lower, upper, sym):
+    sumtotal = 0
+    sumexpr = sympify(eq)
+    while lower <= upper:
+        newexpr = sumexpr.subs(sym, lower)
+        sumtotal = sumtotal + newexpr
+        lower += 1
+    return sumtotal
+
+
+def productnotation(eq, lower, upper, sym):
+    prodtotal = 1
+    sumexpr = sympify(eq)
+    while lower <= upper:
+        newexpr = sumexpr.subs(sym, lower)
+        prodtotal = prodtotal * newexpr
+        lower += 1
+    return prodtotal
+
+
+# Method to evaluate limits; can evaluate from one side
+def limits(eq, sym, sym0, side=None):
+    if side is None:
+        return limit(eq, sym, sym0)
+    else:
+        return limit(eq, sym, sym0, side)
+
+
 print("derivations testing\n")
-print(newderivative('1/(a**2)'))
+# parameters: equation, *symbols
+print(newderivative('1/(x**2)'))
 # If there's more than one variable in the exp, the variable(s) of differentiation must be supplied to differentiate
 print(newderivative('4*x**2*y**2', x))
-print('Integrating testing\n')
+print('\nIntegrating testing\n')
+# parameters: equation, *symbols
 print('indefinite integral ', newintegration('2*x'))
+# parameters: equation, *tuple(symbol, lowerbound, upperbound)
 print('definite integral ', newintegration('2*x', (x, 0, 2)))
 
 # If the integrand contains more than one free symbol, an integration variable should be supplied explicitly
+# parameters: equation, *symbols
 print('indefinite integral ', newintegration('2*x**2*y + 2*x*y**2', x, y))
+# parameters: equation, *tuple(symbol, lowerbound, upperbound)
 print('definite integral ', newintegration('2*x**2*y + 2*x*y**2', (x, 0, 2), (y, 0, 2)))
 
+# variable to be replaced must be initialized as a symbol and sent as a parameter for these methods to work
+# parameters: equation, lowerbound, upperbound, symbol
+print('\ntesting summation\n')
+print(summation('x**2', 0, 6, x))
 
+print('\ntesting product notation\n')
+print(productnotation('x**2', 1, 6, x))
+
+print('\ntesting limits\n')
+# parameters: equation, x, x0, side to evaluate
+print(limits(1/x, x, 0, '+'))
+print(limits(sin(x)/x, x, 0))
 # testing string replacing for exponent
+print('\ntesting formatting\n')
 str1 = "4x^2"
 print(str1.replace("^", "**"))
-print(formatEQ("4x^2"))
-
+print(formateq("4x^2"))
