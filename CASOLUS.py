@@ -1,18 +1,43 @@
 # CASOLUS lexical analizer and parser
 import sys, math
+import lex as lex
 sys.path.insert(0, "../..")
 
 if sys.version_info[0] >= 3:
     raw_input = input
 
+
+reserved = {
+    'integration': 'INTEGRAL',
+    'from': 'FROM',
+    'to': 'TO',
+    'derivation': 'DERIVATIVE',
+    'show' : 'SHOW',
+    'limit' : 'LIMIT',
+    'WHEN': 'WHEN',
+    'of' : 'OF',
+    'infinity' : 'INFINITY'
+
+}
+
 # Tokens names
-tokens = (
-    'VAR', 'FLOAT', 'INT', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'POWER', 'LPAREN', 'RPAREN', 'EQUALS',
-)
+tokens = [
+    'VAR',
+    'FLOAT',
+    'INT',
+    'PLUS',
+    'MINUS',
+    'TIMES',
+    'DIVIDE',
+    'POWER',
+    'LPAREN',
+    'RPAREN',
+    'EQUALS',
+    'LBRACE',
+    'RBRACE'
+         ] + list(reserved.values())
 
 # set Variables format
-t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
-
 # Set tokens representation
 t_PLUS = r'\+'
 t_MINUS = '\-'
@@ -22,24 +47,29 @@ t_POWER = r'\^'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_EQUALS = r'\='
+t_LBRACE  = r'\{'
+t_RBRACE  = r'\}'
+t_ignore = " \t"
+
+def t_VAR(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value,'VAR')    # Check for reserved words
+    return t
 
 # Set floating point structure
 #   number '.' number                   -> example. 12.34
 #   number '.' number 'e' '+/-' number  -> example. 12.34e+56 or 12.34E-56
 #   number 'e' '+/-' number             -> example. 12E+34 or 12e-34
 def t_FLOAT(t):
-    r"((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?"
+    r'[+-]?([0-9]+)?([.][0-9]+)([eE][+-]?[0-9]+)?'
     t.value = float(t.value)
     return t
 
 # Set integer structure
 def t_INT(t):
-    r'\d+'
+    r'[+-]?[0-9]+'
     t.value = int(t.value)
     return t
-
-t_ignore = " \t"
-
 
 def t_newline(t):
     r'\n+'
@@ -47,13 +77,29 @@ def t_newline(t):
 
 
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    print ("ERROR: Line %d: LEXER: Illegal character '%s' " % (t.lexer.lineno, t.value[0]))
     t.lexer.skip(1)
 
-# Build the lexer
-import ply.lex as lex
-lex.lex()
 
+# Build the lexer
+
+
+
+lexer = lex.lex()
+file_handle= open("input.txt", "r")
+fileContent = file_handle.read()
+
+#Enter the input data to the lexer
+lexer.input(fileContent)
+#tokenise
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    print(tok)
+
+
+'''
 # Parsing precedence rules
 precedence = (
     ('left', 'POWER'),
@@ -152,3 +198,4 @@ while 1:
     if not s:
         continue
     yacc.parse(s)
+'''

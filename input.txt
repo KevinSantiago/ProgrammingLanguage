@@ -1,0 +1,11 @@
+5.666
+-9.0988
+-9
+8
+.9790
+-.9890
+show integration
+limit
+from $$$
+7990 bola =
+integration of x^2 from 0 to infinity
