@@ -16,8 +16,9 @@ reserved = {
     'limit' : 'LIMIT',
     'WHEN': 'WHEN',
     'of' : 'OF',
-    'infinity' : 'INFINITY'
-
+    'infinity' : 'INFINITY',
+    'summation' : 'SUMMATION',
+    'product' : 'PRODUCT'
 }
 
 # Tokens names
@@ -80,6 +81,10 @@ def t_error(t):
     print ("ERROR: Line %d: LEXER: Illegal character '%s' " % (t.lexer.lineno, t.value[0]))
     t.lexer.skip(1)
 
+def t_COMMENT(t):
+    r'\#.*'
+    pass
+    # No return value. Token discarded
 
 # Build the lexer
 

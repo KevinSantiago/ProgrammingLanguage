@@ -7,5 +7,5 @@
 show integration
 limit
 from $$$
-7990 bola =
+{ 7990 bola}  =
 integration of x^2 from 0 to infinity
