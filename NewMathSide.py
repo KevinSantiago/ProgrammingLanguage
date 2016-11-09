@@ -1,6 +1,17 @@
 from sympy import *
 # ALL VARIABLES USED IN EQUATIONS MUST BE DECLARED AS SYMBOLS OR ELSE SYMPY METHODS WILL NOT RECOGNIZE THEM
-x, y, z, t, = symbols('x y z t')
+x, y, z, t =0
+
+def symbolsConversion(x1,y1,z1,t1):
+   global x
+   x = symbols(x1)
+   global y
+   y = symbols(y1)
+   global z
+   z = symbols(z1)
+   global t
+   t = symbols(t1)
+
 
 
 # method to derive equation based on variables present
@@ -20,6 +31,7 @@ def derivative(eq):
 
 # method to derive equations based on variables passed to it
 def newderivative(eq, *args):
+
     if len(args) == 0:
         eq = diff(eq)
     for sym in args:

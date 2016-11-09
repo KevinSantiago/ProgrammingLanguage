@@ -1,6 +1,7 @@
 # CASOLUS lexical analizer and parser
 import sys, math
-import lex as lex
+from NewMathSide import *
+
 sys.path.insert(0, "../..")
 
 if sys.version_info[0] >= 3:
@@ -90,7 +91,10 @@ def t_COMMENT(t):
 
 
 
+import ply.lex as lex
 lexer = lex.lex()
+
+'''
 file_handle= open("input.txt", "r")
 fileContent = file_handle.read()
 
@@ -103,13 +107,13 @@ while True:
         break
     print(tok)
 
-
 '''
+
 # Parsing precedence rules
 precedence = (
     ('left', 'POWER'),
-    ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
+    ('left', 'PLUS', 'MINUS'),
     ('right', 'UMINUS'),
 )
 
@@ -117,9 +121,21 @@ names = {}
 
 
 # Define the statement assign
+# def p_expression_derivarion(p):
+#      'expression : DERIVATIVE OF expression'
+#      derivative(p[2])
+#      print("yes")
+
+
+
+# Define the statement assign
 def p_statement_assign(p):
     'statement : VAR EQUALS expression'
     names[p[1]] = p[3]
+
+def show_print(p):
+    'statement : SHOW VAR'
+    return(p[2])
 
 
 # Define statement expression
@@ -128,9 +144,11 @@ def p_statement_expr(p):
     print(p[1])
 
 
+
 def p_expression_plus(p):
     'expression : expression PLUS expression'
     p[0] = p[1] + p[3]
+
 
 
 def p_expression_minus(p):
@@ -139,13 +157,18 @@ def p_expression_minus(p):
 
 
 def p_expression_power(p):
-    'expression : expression POWER expression'
-    p[0] = math.pow(p[1], p[3])
+    '''expression : expression POWER expression
+                  | expression TIMES expression '''
+    print(p[2])
+    if p[2] == '^':
+        p[0] = math.pow(p[1], p[3])
+    elif p[2] == '*':
+        p[0] = p[1] * p[3]
 
 
-def p_expression_times(p):
-    'expression : expression TIMES expression'
-    p[0] = p[1] * p[3]
+# def p_expression_times(p):
+#     'expression : expression TIMES expression'
+#     p[0] = p[1] * p[3]
 
 
 def p_expression_divide(p):
@@ -193,14 +216,13 @@ def p_error(p):
         print("Syntax error at EOF")
 
 import ply.yacc as yacc
-yacc.yacc()
+parser = yacc.yacc()
 
-while 1:
+while True:
     try:
         s = raw_input('CASOLUS > ')
     except EOFError:
         break
     if not s:
         continue
-    yacc.parse(s)
-'''
+    parser.parse(s)
