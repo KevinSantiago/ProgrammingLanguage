@@ -2,6 +2,7 @@
 
 http://www.dabeaz.com/ply/ply.html
 
+http://dijkstra.cs.virginia.edu/ldi/crm/Cool%20Syntax.html
 
 CASOLUS Grammar Derivation 
   
