@@ -23,7 +23,7 @@ reserved = {
     'y' : 'YVALUE',
     'z' : 'ZVALUE',
     't' : 'TVALUE',
-    'product' : 'PRODUCT'
+    'product' : 'PRODUCT',
 }
 
 # Tokens names
@@ -40,7 +40,8 @@ tokens = [
     'RPAREN',
     'EQUALS',
     'LBRACE',
-    'RBRACE'
+    'RBRACE',
+    'ASSIGNMENT'
          ] + list(reserved.values())
 
 # set Variables format
@@ -55,6 +56,7 @@ t_RPAREN = r'\)'
 t_EQUALS = r'\='
 t_LBRACE  = r'\{'
 t_RBRACE  = r'\}'
+t_ASSIGNMENT = r'\<-'
 t_ignore = " \t"
 
 def t_VAR(t):
@@ -140,13 +142,22 @@ def p_statement_assign(p):
 # def show_print(p):
 #     'statement : SHOW VAR'
 #     return(p[2])
+#
+# def p_statement_xvalue(p):
+#     'statement : VAR EQUALS XVALUE'
+#     string = lexer.lexdata
+#     string = string[6:]
+#     print(string)
+#     names[p[1]] = string
 
-def p_statement_xvalue(p):
-    'statement : VAR EQUALS XVALUE'
+def p_statement_assignTemp(p):
+    'statement : VAR ASSIGNMENT'
     string = lexer.lexdata
-    string = string[6:]
+    index =  string.index('<-')
+    string = string[(index+2):]
     print(string)
     names[p[1]] = string
+
 
 # Define statement expression
 def p_statement_expr(p):
@@ -158,17 +169,25 @@ def p_expression_integral(p):
     'expression : INTEGRAL OF expression'
 
     print("entered")
-    eq = formateq(p[3])
+    print(str(p[3]))
+    if s.find('^') != -1:
+        eq = formateq(p[3])
+    else:
+        eq = str(p[3])
 
-    p[0] = newintegration(eq)
+    p[0] = newintegration(eq, symbols('x'))
 
 def p_expression_derivative(p):
     'expression : DERIVATIVE OF expression'
 
     print("entered")
-    eq = formateq(p[3])
+    print(str(p[3]))
+    if s.find('^') != -1:
+        eq = formateq(p[3])
+    else:
+        eq = str(p[3])
 
-    p[0] = newderivative(eq)
+    p[0] = newderivative(eq, symbols('x'))
 
 
 

@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = '2C9B985E5114E3CF509FA638C0E179F7'
+_lr_signature = 'E21A2DE9D1825790448070D4AFCF4EA9'
     
-_lr_action_items = {'POWER':([2,6,8,9,11,12,15,21,23,24,25,26,27,28,29,30,],[-15,-13,16,-14,-15,-11,16,16,16,16,-12,-8,-7,-10,-6,-9,]),'VAR':([0,3,7,10,13,14,16,17,18,19,20,],[2,11,11,11,11,11,11,11,11,11,11,]),'MINUS':([0,2,3,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,29,30,],[3,-15,3,-13,3,17,-14,3,-15,-11,3,3,17,3,3,3,3,3,17,17,17,-12,17,-7,17,-6,17,]),'INTEGRAL':([0,3,7,10,13,14,16,17,18,19,20,],[4,4,4,4,4,4,4,4,4,4,4,]),'DERIVATIVE':([0,3,7,10,13,14,16,17,18,19,20,],[5,5,5,5,5,5,5,5,5,5,5,]),'INT':([0,3,7,10,13,14,16,17,18,19,20,],[6,6,6,6,6,6,6,6,6,6,6,]),'$end':([1,2,6,8,9,11,12,21,22,23,24,25,26,27,28,29,30,],[0,-15,-13,-3,-14,-15,-11,-1,-2,-4,-5,-12,-8,-7,-10,-6,-9,]),'RPAREN':([6,9,11,12,15,23,24,25,26,27,28,29,30,],[-13,-14,-15,-11,25,-4,-5,-12,-8,-7,-10,-6,-9,]),'LPAREN':([0,3,7,10,13,14,16,17,18,19,20,],[7,7,7,7,7,7,7,7,7,7,7,]),'PLUS':([2,6,8,9,11,12,15,21,23,24,25,26,27,28,29,30,],[-15,-13,19,-14,-15,-11,19,19,19,19,-12,19,-7,19,-6,19,]),'FLOAT':([0,3,7,10,13,14,16,17,18,19,20,],[9,9,9,9,9,9,9,9,9,9,9,]),'DIVIDE':([2,6,8,9,11,12,15,21,23,24,25,26,27,28,29,30,],[-15,-13,18,-14,-15,-11,18,18,18,18,-12,18,-7,-10,-6,-9,]),'XVALUE':([10,],[22,]),'TIMES':([2,6,8,9,11,12,15,21,23,24,25,26,27,28,29,30,],[-15,-13,20,-14,-15,-11,20,20,20,20,-12,20,-7,-10,-6,-9,]),'OF':([4,5,],[13,14,]),'EQUALS':([2,],[10,]),}
+_lr_action_items = {'VAR':([0,3,5,10,14,16,17,18,19,20,21,],[1,12,12,12,12,12,12,12,12,12,12,]),'OF':([4,8,],[14,21,]),'EQUALS':([1,],[10,]),'ASSIGNMENT':([1,],[11,]),'RPAREN':([2,9,12,13,15,23,24,25,26,27,28,29,30,],[-14,-13,-15,-11,24,-4,-12,-8,-6,-9,-10,-7,-5,]),'POWER':([1,2,7,9,12,13,15,22,23,24,25,26,27,28,29,30,],[-15,-14,16,-13,-15,-11,16,16,16,-12,-8,-6,-9,-10,-7,16,]),'DIVIDE':([1,2,7,9,12,13,15,22,23,24,25,26,27,28,29,30,],[-15,-14,19,-13,-15,-11,19,19,19,-12,19,-6,-9,-10,-7,19,]),'INTEGRAL':([0,3,5,10,14,16,17,18,19,20,21,],[4,4,4,4,4,4,4,4,4,4,4,]),'LPAREN':([0,3,5,10,14,16,17,18,19,20,21,],[5,5,5,5,5,5,5,5,5,5,5,]),'INT':([0,3,5,10,14,16,17,18,19,20,21,],[9,9,9,9,9,9,9,9,9,9,9,]),'DERIVATIVE':([0,3,5,10,14,16,17,18,19,20,21,],[8,8,8,8,8,8,8,8,8,8,8,]),'PLUS':([1,2,7,9,12,13,15,22,23,24,25,26,27,28,29,30,],[-15,-14,17,-13,-15,-11,17,17,17,-12,17,-6,17,17,-7,17,]),'TIMES':([1,2,7,9,12,13,15,22,23,24,25,26,27,28,29,30,],[-15,-14,18,-13,-15,-11,18,18,18,-12,18,-6,-9,-10,-7,18,]),'$end':([1,2,6,7,9,11,12,13,22,23,24,25,26,27,28,29,30,],[-15,-14,0,-3,-13,-2,-15,-11,-1,-4,-12,-8,-6,-9,-10,-7,-5,]),'MINUS':([0,1,2,3,5,7,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,],[3,-15,-14,3,3,20,-13,3,-15,-11,3,20,3,3,3,3,3,3,20,20,-12,20,-6,20,20,-7,20,]),'FLOAT':([0,3,5,10,14,16,17,18,19,20,21,],[2,2,2,2,2,2,2,2,2,2,2,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,3,7,10,13,14,16,17,18,19,20,],[8,12,15,21,23,24,26,27,28,29,30,]),}
+_lr_goto_items = {'statement':([0,],[6,]),'expression':([0,3,5,10,14,16,17,18,19,20,21,],[7,13,15,22,23,25,26,27,28,29,30,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,19 +26,19 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> VAR EQUALS expression','statement',3,'p_statement_assign','CASOLUS.py',137),
-  ('statement -> VAR EQUALS XVALUE','statement',3,'p_statement_xvalue','CASOLUS.py',145),
-  ('statement -> expression','statement',1,'p_statement_expr','CASOLUS.py',153),
-  ('expression -> INTEGRAL OF expression','expression',3,'p_expression_integral','CASOLUS.py',158),
-  ('expression -> DERIVATIVE OF expression','expression',3,'p_expression_derivative','CASOLUS.py',166),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_plus','CASOLUS.py',177),
-  ('expression -> expression MINUS expression','expression',3,'p_expression_minus','CASOLUS.py',183),
-  ('expression -> expression POWER expression','expression',3,'p_expression_power','CASOLUS.py',188),
-  ('expression -> expression TIMES expression','expression',3,'p_expression_power','CASOLUS.py',189),
-  ('expression -> expression DIVIDE expression','expression',3,'p_expression_power','CASOLUS.py',190),
-  ('expression -> MINUS expression','expression',2,'p_expression_uminus','CASOLUS.py',211),
-  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','CASOLUS.py',217),
-  ('expression -> INT','expression',1,'p_expression_int','CASOLUS.py',223),
-  ('expression -> FLOAT','expression',1,'p_expression_float','CASOLUS.py',229),
-  ('expression -> VAR','expression',1,'p_expression_var','CASOLUS.py',235),
+  ('statement -> VAR EQUALS expression','statement',3,'p_statement_assign','CASOLUS.py',139),
+  ('statement -> VAR ASSIGNMENT','statement',2,'p_statement_assignTemp','CASOLUS.py',154),
+  ('statement -> expression','statement',1,'p_statement_expr','CASOLUS.py',164),
+  ('expression -> INTEGRAL OF expression','expression',3,'p_expression_integral','CASOLUS.py',169),
+  ('expression -> DERIVATIVE OF expression','expression',3,'p_expression_derivative','CASOLUS.py',181),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_plus','CASOLUS.py',196),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_minus','CASOLUS.py',202),
+  ('expression -> expression POWER expression','expression',3,'p_expression_power','CASOLUS.py',207),
+  ('expression -> expression TIMES expression','expression',3,'p_expression_power','CASOLUS.py',208),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_power','CASOLUS.py',209),
+  ('expression -> MINUS expression','expression',2,'p_expression_uminus','CASOLUS.py',230),
+  ('expression -> LPAREN expression RPAREN','expression',3,'p_expression_group','CASOLUS.py',236),
+  ('expression -> INT','expression',1,'p_expression_int','CASOLUS.py',242),
+  ('expression -> FLOAT','expression',1,'p_expression_float','CASOLUS.py',248),
+  ('expression -> VAR','expression',1,'p_expression_var','CASOLUS.py',254),
 ]

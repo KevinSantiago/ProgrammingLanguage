@@ -25,7 +25,7 @@ def formateq(eq):
     if isinstance(eq, str):
         tired = str(eq)
         tired.replace("^", "**")
-        return tired
+        return str(tired)
 
 def reformateq(eq):
     if isinstance(eq, str):
@@ -69,7 +69,7 @@ print(newderivative('1/(x**2)'))
 print(newderivative('4*x**2*y**2', symbols('x')))
 print('\nIntegrating testing\n')
 # parameters: equation, *symbols
-print('indefinite integral ', newintegration('2*x'))
+print('indefinite integral ', newintegration('2',symbols('x')))
 # parameters: equation, *tuple(symbol, lowerbound, upperbound)
 print('definite integral ', newintegration('2*x', (symbols('x'), 0, 2)))
 
