@@ -27,6 +27,12 @@ def formateq(eq):
         tired.replace("^", "**")
         return tired
 
+def reformateq(eq):
+    if isinstance(eq, str):
+        tired = str(eq)
+        tired.replace("**", "^")
+        return tired
+
 
 def summation(eq, lower, upper, sym):
     sumtotal = 0

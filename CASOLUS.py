@@ -129,7 +129,7 @@ names = {}
 #      'expression : DERIVATIVE OF expression'
 #      derivative(p[2])
 #      print("yes")
-
+# Define the statement assign
 
 
 # Define the statement assign
@@ -151,7 +151,25 @@ def p_statement_xvalue(p):
 # Define statement expression
 def p_statement_expr(p):
     'statement : expression'
-    print(p[1])
+    output = reformateq(str(p[1]))
+    print(output)
+
+def p_expression_integral(p):
+    'expression : INTEGRAL OF expression'
+
+    print("entered")
+    eq = formateq(p[3])
+
+    p[0] = newintegration(eq)
+
+def p_expression_derivative(p):
+    'expression : DERIVATIVE OF expression'
+
+    print("entered")
+    eq = formateq(p[3])
+
+    p[0] = newderivative(eq)
+
 
 
 
