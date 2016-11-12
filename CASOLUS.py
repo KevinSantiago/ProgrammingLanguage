@@ -19,7 +19,7 @@ reserved = {
     'of' : 'OF',
     'infinity' : 'INFINITY',
     'summation' : 'SUMMATION',
-        'x' : 'XVALUE',
+    'x' : 'XVALUE',
     'y' : 'YVALUE',
     'z' : 'ZVALUE',
     't' : 'TVALUE',
@@ -117,9 +117,9 @@ while True:
 
 # Parsing precedence rules
 precedence = (
-    ('left', 'POWER'),
-    ('left', 'TIMES', 'DIVIDE'),
     ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE'),
+    ('left', 'POWER'),
     ('right', 'UMINUS'),
 )
 
@@ -190,40 +190,22 @@ def p_expression_derivative(p):
     p[0] = newderivative(eq, symbols('x'))
 
 
-
-
-def p_expression_plus(p):
-    'expression : expression PLUS expression'
-    p[0] = p[1] + p[3]
-
-
-
-def p_expression_minus(p):
-    'expression : expression MINUS expression'
-    p[0] = p[1] - p[3]
-
-
-def p_expression_power(p):
-    '''expression : expression POWER expression
+def p_expression_basicMath(p):
+    '''expression : expression PLUS expression
+                   | expression MINUS expression
+                   | expression POWER expression
                    | expression TIMES expression
                    | expression DIVIDE expression'''
-    print(p[1])
-    if p[2] == '^':
+    if p[2] == '+':
+        p[0] = p[1] + p[3]
+    elif p[2] == '-':
+        p[0] = p[1] - p[3]
+    elif p[2] == '^':
         p[0] = math.pow(p[1], p[3])
     elif p[2] == '*':
         p[0] = p[1] * p[3]
     elif p[2] == '/':
         p[0] = p[1] / p[3]
-
-
-# def p_expression_times(p):
-#     'expression : expression TIMES expression'
-#     p[0] = p[1] * p[3]
-
-
-# def p_expression_divide(p):
-#     'expression : expression DIVIDE expression'
-#     p[0] = p[1] / p[3]
 
 
 def p_expression_uminus(p):
