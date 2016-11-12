@@ -19,6 +19,10 @@ reserved = {
     'of' : 'OF',
     'infinity' : 'INFINITY',
     'summation' : 'SUMMATION',
+        'x' : 'XVALUE',
+    'y' : 'YVALUE',
+    'z' : 'ZVALUE',
+    't' : 'TVALUE',
     'product' : 'PRODUCT'
 }
 
@@ -133,10 +137,16 @@ def p_statement_assign(p):
     'statement : VAR EQUALS expression'
     names[p[1]] = p[3]
 
-def show_print(p):
-    'statement : SHOW VAR'
-    return(p[2])
+# def show_print(p):
+#     'statement : SHOW VAR'
+#     return(p[2])
 
+def p_statement_xvalue(p):
+    'statement : VAR EQUALS XVALUE'
+    string = lexer.lexdata
+    string = string[6:]
+    print(string)
+    names[p[1]] = string
 
 # Define statement expression
 def p_statement_expr(p):
@@ -158,12 +168,15 @@ def p_expression_minus(p):
 
 def p_expression_power(p):
     '''expression : expression POWER expression
-                  | expression TIMES expression '''
-    print(p[2])
+                   | expression TIMES expression
+                   | expression DIVIDE expression'''
+    print(p[1])
     if p[2] == '^':
         p[0] = math.pow(p[1], p[3])
     elif p[2] == '*':
         p[0] = p[1] * p[3]
+    elif p[2] == '/':
+        p[0] = p[1] / p[3]
 
 
 # def p_expression_times(p):
@@ -171,9 +184,9 @@ def p_expression_power(p):
 #     p[0] = p[1] * p[3]
 
 
-def p_expression_divide(p):
-    'expression : expression DIVIDE expression'
-    p[0] = p[1] / p[3]
+# def p_expression_divide(p):
+#     'expression : expression DIVIDE expression'
+#     p[0] = p[1] / p[3]
 
 
 def p_expression_uminus(p):
