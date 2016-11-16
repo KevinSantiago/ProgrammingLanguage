@@ -1,6 +1,6 @@
 # CASOLUS lexical analizer and parser
 import sys, math
-from NewMathSide import *
+import NewMathSide
 
 sys.path.insert(0, "../..")
 
@@ -97,20 +97,6 @@ def t_COMMENT(t):
 import ply.lex as lex
 lexer = lex.lex()
 
-'''
-file_handle= open("input.txt", "r")
-fileContent = file_handle.read()
-
-#Enter the input data to the lexer
-lexer.input(fileContent)
-#tokenise
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
-
-'''
 
 # Parsing precedence rules
 precedence = (
@@ -159,7 +145,7 @@ def p_statement_assignTemp(p):
 # Define statement expression
 def p_statement_expr(p):
     'statement : expression'
-    output = reformateq(str(p[1]))
+    output = NewMathSide.reformateq(str(p[1]))
     print(output)
 
 def p_expression_integral(p):
@@ -168,11 +154,13 @@ def p_expression_integral(p):
     print("entered")
     print(str(p[3]))
     if s.find('^') != -1:
-        eq = formateq(p[3])
+        eq = NewMathSide.formateq(p[3])
     else:
         eq = str(p[3])
 
-    p[0] = newintegration(eq, symbols('x'))
+    eq = (NewMathSide.newintegration(eq, NewMathSide.symbols('x')))
+    eq = NewMathSide.reformateq(eq)
+    p[0] = eq
 
 def p_expression_definite_integral(p):
     'expression : INTEGRAL FROM expression TO expression OF expression'
@@ -181,11 +169,11 @@ def p_expression_definite_integral(p):
     highBound = str(p[5])
     eq1 = str(p[7])
     if s.find('^') != -1:
-        eq = formateq(eq1)
+        eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
 
-    p[0] = newintegration(eq, (symbols('x'), lowerBound, highBound))
+    p[0] = NewMathSide.newintegration(eq, (NewMathSide.symbols('x'), lowerBound, highBound))
 
 
 def p_expression_derivative(p):
@@ -194,11 +182,11 @@ def p_expression_derivative(p):
     print("entered")
     print(str(p[3]))
     if s.find('^') != -1:
-        eq = formateq(p[3])
+        eq = NewMathSide.formateq(p[3])
     else:
         eq = str(p[3])
 
-    p[0] = newderivative(eq, symbols('x'))
+    p[0] = NewMathSide.newderivative(eq, NewMathSide.symbols('x'))
 
 
 
@@ -210,7 +198,7 @@ def p_expression_limit(p):
     eq1 = str(p[7])
 
     if s.find('^') != -1:
-        eq = formateq(eq1)
+        eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
 
@@ -218,7 +206,7 @@ def p_expression_limit(p):
     #print(tendsTo)
     #print(eq)
 
-    p[0] = limits(eq, symbols('x'), tendsTo)
+    p[0] = NewMathSide.limits(eq, NewMathSide.symbols('x'), tendsTo)
 
 
 

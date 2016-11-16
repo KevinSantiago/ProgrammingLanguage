@@ -1,3 +1,5 @@
+import string
+
 from sympy import *
 
 
@@ -29,8 +31,9 @@ def formateq(eq):
 
 def reformateq(eq):
     if isinstance(eq, str):
+        print("pasooo")
         tired = str(eq)
-        tired.replace("**", "^")
+        tired = tired.replace("**", "^")
         return tired
 
 
