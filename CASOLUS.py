@@ -128,6 +128,7 @@ def p_statement_expr(p):
     output = NewMathSide.reformateq(str(p[1]))
 
 
+
 def p_expression_integral(p):
     'expression : INTEGRAL OF expression'
 
@@ -261,6 +262,7 @@ def p_expression_var(p):
     "expression : VAR"
     try:
         p[0] = names[p[1]]
+        print(p[0])
     except LookupError:
    #     print("Undefined variable '%s'" % p[1])
         p[0] = 0
