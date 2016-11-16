@@ -177,6 +177,20 @@ def p_expression_integral(p):
 
     p[0] = newintegration(eq, symbols('x'))
 
+def p_expression_definite_integral(p):
+    'expression : INTEGRAL FROM expression TO expression OF expression'
+
+    lowerBound = str(p[3])
+    highBound = str(p[5])
+    eq1 = str(p[7])
+    if s.find('^') != -1:
+        eq = formateq(eq1)
+    else:
+        eq = str(eq1)
+
+    p[0] = newintegration(eq, (symbols('x'), lowerBound, highBound))
+
+
 def p_expression_derivative(p):
     'expression : DERIVATIVE OF expression'
 
