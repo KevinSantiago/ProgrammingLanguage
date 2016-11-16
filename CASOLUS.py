@@ -13,9 +13,8 @@ reserved = {
     'from': 'FROM',
     'to': 'TO',
     'derivation': 'DERIVATIVE',
-    'show' : 'SHOW',
     'limit' : 'LIMIT',
-    'WHEN': 'WHEN',
+    'when': 'WHEN',
     'of' : 'OF',
     'infinity' : 'INFINITY',
     'summation' : 'SUMMATION',
@@ -39,8 +38,7 @@ tokens = [
     'LPAREN',
     'RPAREN',
     'EQUALS',
-    'LBRACE',
-    'RBRACE',
+    'GHOST',
     'ASSIGNMENT'
          ] + list(reserved.values())
 
@@ -54,9 +52,8 @@ t_POWER = r'\^'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_EQUALS = r'\='
-t_LBRACE  = r'\{'
-t_RBRACE  = r'\}'
 t_ASSIGNMENT = r'\<-'
+t_GHOST = r'\->'
 t_ignore = " \t"
 
 def t_VAR(t):
@@ -202,6 +199,28 @@ def p_expression_derivative(p):
         eq = str(p[3])
 
     p[0] = newderivative(eq, symbols('x'))
+
+
+
+def p_expression_limit(p):
+    'expression : LIMIT WHEN XVALUE GHOST expression OF expression'
+
+    limitOf = str(p[3])
+    tendsTo = str(p[5])
+    eq1 = str(p[7])
+
+    if s.find('^') != -1:
+        eq = formateq(eq1)
+    else:
+        eq = str(eq1)
+
+
+    #print(tendsTo)
+    #print(eq)
+
+    p[0] = limits(eq, symbols('x'), tendsTo)
+
+
 
 
 def p_expression_basicMath(p):
