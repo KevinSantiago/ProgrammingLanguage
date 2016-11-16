@@ -16,12 +16,12 @@ reserved = {
     'limit' : 'LIMIT',
     'when': 'WHEN',
     'of' : 'OF',
-    'infinity' : 'INFINITY',
+    'oo' : 'INFINITY',
     'summation' : 'SUMMATION',
     'x' : 'XVALUE',
-    'y' : 'YVALUE',
-    'z' : 'ZVALUE',
-    't' : 'TVALUE',
+    # 'y' : 'YVALUE',
+    # 'z' : 'ZVALUE',
+    # 't' : 'TVALUE',
     'product' : 'PRODUCT',
 }
 
@@ -108,37 +108,17 @@ precedence = (
 
 names = {}
 
-
-# Define the statement assign
-# def p_expression_derivarion(p):
-#      'expression : DERIVATIVE OF expression'
-#      derivative(p[2])
-#      print("yes")
-# Define the statement assign
-
-
 # Define the statement assign
 def p_statement_assign(p):
     'statement : VAR EQUALS expression'
     names[p[1]] = p[3]
 
-# def show_print(p):
-#     'statement : SHOW VAR'
-#     return(p[2])
-#
-# def p_statement_xvalue(p):
-#     'statement : VAR EQUALS XVALUE'
-#     string = lexer.lexdata
-#     string = string[6:]
-#     print(string)
-#     names[p[1]] = string
 
 def p_statement_assignTemp(p):
     'statement : VAR ASSIGNMENT'
     string = lexer.lexdata
     index =  string.index('<-')
     string = string[(index+2):]
-    print(string)
     names[p[1]] = string
 
 
@@ -146,19 +126,17 @@ def p_statement_assignTemp(p):
 def p_statement_expr(p):
     'statement : expression'
     output = NewMathSide.reformateq(str(p[1]))
-    print(output)
+
 
 def p_expression_integral(p):
     'expression : INTEGRAL OF expression'
 
-    print("entered")
-    print(str(p[3]))
+
     if s.find('^') != -1:
         eq = NewMathSide.formateq(p[3])
     else:
         eq = str(p[3])
-
-    eq = (NewMathSide.newintegration(eq, NewMathSide.symbols('x')))
+    eq = (str(NewMathSide.newintegration(eq, NewMathSide.symbols('x'))))
     eq = NewMathSide.reformateq(eq)
     p[0] = eq
 
@@ -172,26 +150,27 @@ def p_expression_definite_integral(p):
         eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
-
-    p[0] = NewMathSide.newintegration(eq, (NewMathSide.symbols('x'), lowerBound, highBound))
+    eq =(str(NewMathSide.newintegration(eq, (NewMathSide.symbols('x'), lowerBound, highBound))))
+    eq = NewMathSide.reformateq(eq)
+    p[0] = eq
 
 
 def p_expression_derivative(p):
     'expression : DERIVATIVE OF expression'
 
-    print("entered")
-    print(str(p[3]))
     if s.find('^') != -1:
         eq = NewMathSide.formateq(p[3])
     else:
         eq = str(p[3])
-
-    p[0] = NewMathSide.newderivative(eq, NewMathSide.symbols('x'))
+    eq = (str(NewMathSide.newderivative(eq, NewMathSide.symbols('x'))))
+    eq = NewMathSide.reformateq(eq)
+    p[0] = eq
 
 
 
 def p_expression_limit(p):
-    'expression : LIMIT WHEN XVALUE GHOST expression OF expression'
+    '''expression : LIMIT WHEN XVALUE GHOST expression OF expression
+                    | LIMIT WHEN XVALUE GHOST INFINITY OF expression'''
 
     limitOf = str(p[3])
     tendsTo = str(p[5])
@@ -201,12 +180,37 @@ def p_expression_limit(p):
         eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
+    eq = (str(NewMathSide.limits(eq, NewMathSide.symbols('x'), tendsTo)))
+    eq = NewMathSide.reformateq(eq)
+    p[0] = eq
 
 
-    #print(tendsTo)
-    #print(eq)
 
-    p[0] = NewMathSide.limits(eq, NewMathSide.symbols('x'), tendsTo)
+def p_expression_summation(p):
+    'expression : SUMMATION FROM expression TO expression OF expression'
+
+    lowerBound = p[3]
+    highBound = p[5]
+    eq1 = str(p[7])
+    if s.find('^') != -1:
+        eq = NewMathSide.formateq(eq1)
+    else:
+        eq = str(eq1)
+
+    p[0] = NewMathSide.summation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
+
+def p_expression_product(p):
+    'expression : PRODUCT FROM expression TO expression OF expression'
+
+    lowerBound = p[3]
+    highBound = p[5]
+    eq1 = str(p[7])
+    if s.find('^') != -1:
+        eq = NewMathSide.formateq(eq1)
+    else:
+        eq = str(eq1)
+
+    p[0] = NewMathSide.productnotation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
 
 
 
@@ -258,15 +262,15 @@ def p_expression_var(p):
     try:
         p[0] = names[p[1]]
     except LookupError:
-        print("Undefined variable '%s'" % p[1])
+   #     print("Undefined variable '%s'" % p[1])
         p[0] = 0
 
 
-def p_error(p):
-    if p:
-        print("Syntax error at '%s'" % p.value)
-    else:
-        print("Syntax error at EOF")
+def p_error(p):{}
+   # if p:
+   # print("Syntax error at '%s'" % p.value)
+   # else:
+   # print("Syntax error at EOF")
 
 import ply.yacc as yacc
 parser = yacc.yacc()

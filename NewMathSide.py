@@ -31,7 +31,6 @@ def formateq(eq):
 
 def reformateq(eq):
     if isinstance(eq, str):
-        print("pasooo")
         tired = str(eq)
         tired = tired.replace("**", "^")
         return tired
@@ -64,7 +63,7 @@ def limits(eq, sym, sym0, side=None):
     else:
         return limit(eq, sym, sym0, side)
 
-
+'''
 print("derivations testing\n")
 # parameters: equation, *symbols
 print(newderivative('1/(x**2)'))
@@ -93,9 +92,10 @@ print(productnotation('x**2', 1, 6, symbols('x')))
 print('\ntesting limits\n')
 # parameters: equation, x, x0, side to evaluate
 print(limits('1/x', symbols('x'), 0, '+'))
-print(limits('sin(x)/x', symbols('x'), 0))
+print(limits('1/x', symbols('x'), 'oo'))
 # testing string replacing for exponent
 print('\ntesting formatting\n')
 str1 = "4x^2"
 print(str1.replace("^", "**"))
 print(formateq("4x^2"))
+'''
