@@ -90,7 +90,7 @@ print(productnotation('x**2', 1, 6, symbols('x')))
 print('\ntesting limits\n')
 # parameters: equation, x, x0, side to evaluate
 print(limits('1/x', symbols('x'), 0, '+'))
-print(limits('sin(x)/x', symbols('x'), 0))
+print(limits('1/x', symbols('x'), 'oo'))
 # testing string replacing for exponent
 print('\ntesting formatting\n')
 str1 = "4x^2"

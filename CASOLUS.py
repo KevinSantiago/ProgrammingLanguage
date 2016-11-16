@@ -16,12 +16,12 @@ reserved = {
     'limit' : 'LIMIT',
     'when': 'WHEN',
     'of' : 'OF',
-    'infinity' : 'INFINITY',
+    'oo' : 'INFINITY',
     'summation' : 'SUMMATION',
     'x' : 'XVALUE',
-    'y' : 'YVALUE',
-    'z' : 'ZVALUE',
-    't' : 'TVALUE',
+    # 'y' : 'YVALUE',
+    # 'z' : 'ZVALUE',
+    # 't' : 'TVALUE',
     'product' : 'PRODUCT',
 }
 
@@ -123,12 +123,7 @@ precedence = (
 names = {}
 
 
-# Define the statement assign
-# def p_expression_derivarion(p):
-#      'expression : DERIVATIVE OF expression'
-#      derivative(p[2])
-#      print("yes")
-# Define the statement assign
+
 
 
 # Define the statement assign
@@ -136,16 +131,6 @@ def p_statement_assign(p):
     'statement : VAR EQUALS expression'
     names[p[1]] = p[3]
 
-# def show_print(p):
-#     'statement : SHOW VAR'
-#     return(p[2])
-#
-# def p_statement_xvalue(p):
-#     'statement : VAR EQUALS XVALUE'
-#     string = lexer.lexdata
-#     string = string[6:]
-#     print(string)
-#     names[p[1]] = string
 
 def p_statement_assignTemp(p):
     'statement : VAR ASSIGNMENT'
@@ -203,7 +188,8 @@ def p_expression_derivative(p):
 
 
 def p_expression_limit(p):
-    'expression : LIMIT WHEN XVALUE GHOST expression OF expression'
+    '''expression : LIMIT WHEN XVALUE GHOST expression OF expression
+                    | LIMIT WHEN XVALUE GHOST INFINITY OF expression'''
 
     limitOf = str(p[3])
     tendsTo = str(p[5])
@@ -215,10 +201,42 @@ def p_expression_limit(p):
         eq = str(eq1)
 
 
-    #print(tendsTo)
-    #print(eq)
-
     p[0] = limits(eq, symbols('x'), tendsTo)
+
+
+def p_expression_summation(p):
+    'expression : SUMMATION FROM expression TO expression OF expression'
+
+    lowerBound = p[3]
+    highBound = p[5]
+    eq1 = str(p[7])
+    if s.find('^') != -1:
+        eq = formateq(eq1)
+    else:
+        eq = str(eq1)
+
+    print(lowerBound)
+    print(highBound)
+    print(eq)
+
+    p[0] = summation(eq, lowerBound, highBound, symbols('x'))
+
+def p_expression_product(p):
+    'expression : PRODUCT FROM expression TO expression OF expression'
+
+    lowerBound = p[3]
+    highBound = p[5]
+    eq1 = str(p[7])
+    if s.find('^') != -1:
+        eq = formateq(eq1)
+    else:
+        eq = str(eq1)
+
+    print(lowerBound)
+    print(highBound)
+    print(eq)
+
+    p[0] = productnotation(eq, lowerBound, highBound, symbols('x'))
 
 
 
