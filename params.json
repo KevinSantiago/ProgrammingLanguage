@@ -1,0 +1,6 @@
+{
+  "name": "CASOLUS",
+  "tagline": "Programming Language Project",
+  "body": "### Welcome to CASOLUS.\r\nCASOLUS is a Programming Language based on Python focused on solve calculus problems such as indefinite and definite integrals, derivatives, sum notation, product notation and limits. CASOLUS used two main libraries, PLY and SymPy, the first ones is an implementation of lex and yacc parsing tools, the latter one is a symbolic mathematics library used to solve the calculus problems described above. To see more about this proyect see the proyect [document.](https://github.com/KevinSantiago/ProgrammingLanguage/blob/master/Propuesta%20ICOM4036%20(CASOLUS).pdf) \r\n\r\n### CASOLUS Demostration\r\nSee YouTube [video.](http://www.youtube.com/watch?v=aEUEii59L4g \"CASOLUS demostration\")\r\n\r\n\r\n### Authors and Contributors\r\nA project made by: [Carlos Ojeda] (@cojeda1), [Cristian Melendez] (@christianmelendez), [Christian Cancel] (@christiancancel) and [Kevin Santiago](@KevinSantiago).\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
