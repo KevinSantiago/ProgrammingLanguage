@@ -172,9 +172,12 @@ def p_result_integral(p):
         eq = NewMathSide.formateq(p[3])
     else:
         eq = str(p[3])
-    eq = (str(NewMathSide.newintegration(eq, NewMathSide.symbols('x'))))
-    eq = NewMathSide.reformateq(eq)
-    p[0] = eq
+    if p[3] is not None:
+        eq = (str(NewMathSide.newintegration(eq, NewMathSide.symbols('x'))))
+        eq = NewMathSide.reformateq(eq)
+        p[0] = eq
+    else:
+        pass
 
 
 def p_result_definite_integral(p):
@@ -188,9 +191,12 @@ def p_result_definite_integral(p):
         eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
-    eq = (str(NewMathSide.newintegration(eq, (NewMathSide.symbols('x'), lowerbound, highbound))))
-    eq = NewMathSide.reformateq(eq)
-    p[0] = eq
+    if lowerbound is not None and highbound is not None and p[7] is not None:
+        eq = (str(NewMathSide.newintegration(eq, (NewMathSide.symbols('x'), lowerbound, highbound))))
+        eq = NewMathSide.reformateq(eq)
+        p[0] = eq
+    else:
+        pass
 
 
 def p_result_derivative(p):
@@ -201,9 +207,12 @@ def p_result_derivative(p):
         eq = NewMathSide.formateq(p[3])
     else:
         eq = str(p[3])
-    eq = (str(NewMathSide.newderivative(eq, NewMathSide.symbols('x'))))
-    eq = NewMathSide.reformateq(eq)
-    p[0] = eq
+    if p[3] is not None:
+        eq = (str(NewMathSide.newderivative(eq, NewMathSide.symbols('x'))))
+        eq = NewMathSide.reformateq(eq)
+        p[0] = eq
+    else:
+        pass
 
 
 def p_result_limit(p):
@@ -220,9 +229,12 @@ def p_result_limit(p):
         eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
-    eq = (str(NewMathSide.limits(eq, NewMathSide.symbols('x'), tendsTo)))
-    eq = NewMathSide.reformateq(eq)
-    p[0] = eq
+    if limitOf is not None and tendsTo is not None and p[7] is not None:
+        eq = (str(NewMathSide.limits(eq, NewMathSide.symbols('x'), tendsTo)))
+        eq = NewMathSide.reformateq(eq)
+        p[0] = eq
+    else:
+        pass
 
 
 def p_result_summation(p):
@@ -236,8 +248,10 @@ def p_result_summation(p):
         eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
-
-    p[0] = NewMathSide.summation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
+    if lowerBound is not None and highBound is not None and p[7] is not None:
+        p[0] = NewMathSide.summation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
+    else:
+        pass
 
 
 def p_expression_product(p):
@@ -251,8 +265,10 @@ def p_expression_product(p):
         eq = NewMathSide.formateq(eq1)
     else:
         eq = str(eq1)
-
-    p[0] = NewMathSide.productnotation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
+    if lowerBound is not None and highBound is not None and p[7] is not None:
+        p[0] = NewMathSide.productnotation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
+    else:
+        pass
 
 
 def p_equation_more(p):
