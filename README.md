@@ -1,30 +1,7 @@
-# ProgrammingLanguage
+# Programming Language CASOLUS
 
-http://www.dabeaz.com/ply/ply.html
+CASOLUS is a Programming Language based on Python focused on solve calculus problems such as indefinite and definite integrals, derivatives, sum notation, product notation and limits. CASOLUS used two main libraries, PLY and SymPy, the first ones is an implementation of lex and yacc parsing tools, the latter one is a symbolic mathematics library used to solve the calculus problems described above.
 
-http://dijkstra.cs.virginia.edu/ldi/crm/Cool%20Syntax.html
-
-CASOLUS Grammar Derivation 
-  
-  programm = statement
-  
-  statement = print experssion | print calc_expression | expression | calc_expression | assingment expression | assignment calc_epression
-  
-  calc_expression = identifier of var | identifier of expression | idetifier range of var | idetifier range of expression
-  
-  identifier = integration | derivation | sumation | product | limit
-  
-  var = expression 
-  
-  expression = arithmetic | equation | term
-  
-  arithmetic = term factor term 
-  
-  term = constant
-  
-  range = from constant to constant | when reserver_var -> constant
-  
-  constant = int | float
-  
-  
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aEUEii59L4g" frameborder="0" allowfullscreen></iframe>
+ 
   
