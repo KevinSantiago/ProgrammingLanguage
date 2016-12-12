@@ -135,16 +135,33 @@ def p_expression_math(p):
                   | expression TIMES expression
                   | expression DIVIDE expression
                   | expression POWER expression'''
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        p[0] = p[1] / p[3]
-    elif p[2] == '^':
-        p[0] = math.pow(p[1], p[3])
+    # p1 = str(p[1])
+    # p3 = str(p[3])
+    if p[2] == '+' and p[1] is not None and p[3] is not None:
+        if "x" in p[1] or "x" in p[3]:
+            p[0] = str(p[1]) + str(p[2]) + str(p[3])
+        else:
+            p[0] = p[1] + p[3]
+    elif p[2] == '-' and p[1] is not None and p[3] is not None:
+        if "x" in p[1] or "x" in p[3]:
+            p[0] = str(p[1]) + str(p[2]) + str(p[3])
+        else:
+            p[0] = p[1] - p[3]
+    elif p[2] == '*' and p[1] is not None and p[3] is not None:
+        if "x" in p[1] or "x" in p[3]:
+            p[0] = str(p[1]) + str(p[2]) + str(p[3])
+        else:
+            p[0] = p[1] * p[3]
+    elif p[2] == '/' and p[1] is not None and p[3] is not None:
+        if "x" in p[1] or "x" in p[3]:
+            p[0] = str(p[1]) + str(p[2]) + str(p[3])
+        else:
+            p[0] = p[1] / p[3]
+    elif p[2] == '^' and p[1] is not None and p[3] is not None:
+        if "x" in p[1] or "x" in p[3]:
+            p[0] = str(p[1]) + str(p[2]) + str(p[3])
+        else:
+            p[0] = math.pow(p[1], p[3])
 
 
 def p_result_integral(p):
@@ -254,7 +271,10 @@ def p_equation_more(p):
                   | expression TIMES equation
                   | expression DIVIDE equation
                   | expression POWER equation'''
-    p[0] = str(p[1]) + str(p[2]) + str(p[3])
+    if p[1] is None or p[3] is None:
+        pass
+    else:
+        p[0] = str(p[1]) + str(p[2]) + str(p[3])
 
 
 def p_equation_complex(p):
