@@ -169,12 +169,12 @@ def p_result_integral(p):
                    | INTEGRAL OF equation'''
 
     if s.find('^') != -1:
-        eq = NewMathSide.formateq(p[3])
+        eq = MathSide.formateq(p[3])
     else:
         eq = str(p[3])
     if p[3] is not None:
-        eq = (str(NewMathSide.newintegration(eq, NewMathSide.symbols('x'))))
-        eq = NewMathSide.reformateq(eq)
+        eq = (str(MathSide.newintegration(eq, MathSide.symbols('x'))))
+        eq = MathSide.reformateq(eq)
         p[0] = eq
     else:
         pass
@@ -188,12 +188,12 @@ def p_result_definite_integral(p):
     highbound = str(p[5])
     eq1 = str(p[7])
     if s.find('^') != -1:
-        eq = NewMathSide.formateq(eq1)
+        eq = MathSide.formateq(eq1)
     else:
         eq = str(eq1)
     if lowerbound is not None and highbound is not None and p[7] is not None:
-        eq = (str(NewMathSide.newintegration(eq, (NewMathSide.symbols('x'), lowerbound, highbound))))
-        eq = NewMathSide.reformateq(eq)
+        eq = (str(MathSide.newintegration(eq, (MathSide.symbols('x'), lowerbound, highbound))))
+        eq = MathSide.reformateq(eq)
         p[0] = eq
     else:
         pass
@@ -204,12 +204,12 @@ def p_result_derivative(p):
               | DERIVATIVE OF equation'''
 
     if s.find('^') != -1:
-        eq = NewMathSide.formateq(p[3])
+        eq = MathSide.formateq(p[3])
     else:
         eq = str(p[3])
     if p[3] is not None:
-        eq = (str(NewMathSide.newderivative(eq, NewMathSide.symbols('x'))))
-        eq = NewMathSide.reformateq(eq)
+        eq = (str(MathSide.newderivative(eq, MathSide.symbols('x'))))
+        eq = MathSide.reformateq(eq)
         p[0] = eq
     else:
         pass
@@ -226,12 +226,12 @@ def p_result_limit(p):
     eq1 = str(p[7])
 
     if s.find('^') != -1:
-        eq = NewMathSide.formateq(eq1)
+        eq = MathSide.formateq(eq1)
     else:
         eq = str(eq1)
     if limitOf is not None and tendsTo is not None and p[7] is not None:
-        eq = (str(NewMathSide.limits(eq, NewMathSide.symbols('x'), tendsTo)))
-        eq = NewMathSide.reformateq(eq)
+        eq = (str(MathSide.limits(eq, MathSide.symbols('x'), tendsTo)))
+        eq = MathSide.reformateq(eq)
         p[0] = eq
     else:
         pass
@@ -245,11 +245,11 @@ def p_result_summation(p):
     highBound = p[5]
     eq1 = str(p[7])
     if s.find('^') != -1:
-        eq = NewMathSide.formateq(eq1)
+        eq = MathSide.formateq(eq1)
     else:
         eq = str(eq1)
     if lowerBound is not None and highBound is not None and p[7] is not None:
-        p[0] = NewMathSide.summation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
+        p[0] = MathSide.summation(eq, lowerBound, highBound, MathSide.symbols('x'))
     else:
         pass
 
@@ -262,11 +262,11 @@ def p_expression_product(p):
     highBound = p[5]
     eq1 = str(p[7])
     if s.find('^') != -1:
-        eq = NewMathSide.formateq(eq1)
+        eq = MathSide.formateq(eq1)
     else:
         eq = str(eq1)
     if lowerBound is not None and highBound is not None and p[7] is not None:
-        p[0] = NewMathSide.productnotation(eq, lowerBound, highBound, NewMathSide.symbols('x'))
+        p[0] = MathSide.productnotation(eq, lowerBound, highBound, MathSide.symbols('x'))
     else:
         pass
 
