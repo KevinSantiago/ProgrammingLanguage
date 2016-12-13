@@ -182,7 +182,9 @@ def p_result_integral(p):
 
 def p_result_definite_integral(p):
     '''result : INTEGRAL FROM expression TO expression OF expression
-              | INTEGRAL FROM expression TO expression OF equation'''
+              | INTEGRAL FROM expression TO expression OF equation
+              | INTEGRAL FROM expression TO INFINITY OF expression
+              | INTEGRAL FROM expression TO INFINITY OF equation'''
 
     lowerbound = str(p[3])
     highbound = str(p[5])
