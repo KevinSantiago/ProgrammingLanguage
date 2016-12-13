@@ -1,6 +1,6 @@
 import sys
 import math
-import NewMathSide
+import MathSide
 
 sys.path.insert(0, "../..")
 
