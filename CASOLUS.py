@@ -21,6 +21,7 @@ reserved = {
     'sin': 'SIN',
     'cos': 'COS',
     'tan': 'TAN',
+    'varlist' : 'PRINTLIST',
 }
 
 # Tokens
@@ -107,6 +108,15 @@ precedence = (
 
 # dictionary to store the variable name and value
 names = {}
+
+def p_print_var_list(p):
+    '''statement : PRINTLIST '''
+    if len(names) is not 0:
+        for k, v in names.items():
+            print(k, "=", v)
+    else:
+        print("No variables are in the system.")
+
 
 
 def p_statement_assign(p):
